@@ -25,6 +25,7 @@ Dans ce script, doivent être modifiés pour correspondre à votre environnement
 .....................................
 stations.sd
 .....................................
+
 Fichier de définition de schéma permettant de recréer la couche stations prête à l'emploi sur ArcGIS Online :
 - Ajouter le fichier à votre contenu ArcGIS Online
 - Publier le service d'entité à partir des détails de stations.sd
