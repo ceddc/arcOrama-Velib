@@ -12,8 +12,8 @@ etat = requests.get('https://api.jcdecaux.com/vls/v1/stations?apiKey=ac0af9e1563
 # Substituer vos propres nom d'utilisateur et mot de passe
 #
 agol_url = 'https://www.arcgis.com/sharing/rest/generateToken'
-agol_user = 'ChristopheTourret'
-agol_password = 'kiddos'
+agol_user = 'votre_nom_d_utilisateur'
+agol_password = 'votre_mot_de_passe'
 
 # Le referer n'a pas d'importance pour ce type de requête à partir d'un script
 #
@@ -25,8 +25,9 @@ token = token_reponse.json()['token']
 # en passant le token en paramètre. Notez le referer passé dans le Header de la requête,
 # nécéssaire par rapport à l'encodage du token.
 # La requête 1=1 permet de récupérer toutes les stations
+# Vous devez changer l'URL d'accès au service d'entité pour pointer vers votre propre service
 #
-query_url = 'https://services.arcgis.com/d3voDfTFbHOCRwVR/ArcGIS/rest/services/stations/FeatureServer/0/query'
+query_url = 'https://services.arcgis.com/xxxxxxxxxxx/ArcGIS/rest/services/xxxxxxx/FeatureServer/0/query'
 params = {'where': '1=1','outfields': '*','f': 'json','token': token}
 headers = {'referer': 'www.arcgis.com'}
 query_reponse = requests.get(query_url,data=params,headers=headers)
@@ -67,8 +68,9 @@ for feature in features:
 # On va poster via HTTP la liste des objets mis à jour sur le Endpoint REST ArcGIS permettant
 # la mise à jour de la couche carto des stations
 # Ces objets sont "dumpés" en Json avant d'être postés en HTTP
+# Vous devez changer l'URL d'accès au service d'entité pour pointer vers votre propre service
 #
-update_url = 'http://services.arcgis.com/d3voDfTFbHOCRwVR/ArcGIS/rest/services/stations/FeatureServer/0/updateFeatures'
+update_url = 'http://services.arcgis.com/xxxxxxxxxxxxxx/ArcGIS/rest/services/xxxxxxx/FeatureServer/0/updateFeatures'
 params = {'features': json.dumps(updatedFeatures),'f': 'json','token': token}
 update_reponse = requests.post(update_url,data=params,headers=headers)
 
