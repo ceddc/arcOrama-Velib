@@ -22,7 +22,13 @@ Dans ce script, doivent être modifiés pour correspondre à votre environnement
 - Username/Password ArcGIS Online utilisé pour l'exécution
 - URL REST d'accès Query et Update à la classe d'entité des stations
 
-
+.....................................
+stations.sd
+.....................................
+Fichier de définition de schéma permettant de recréer la couche stations prête à l'emploi sur ArcGIS Online :
+- Ajouter le fichier à votre contenu ArcGIS Online
+- Publier le service d'entité à partir des détails de stations.sd
+- un service d'entités "stations" est créé dans vos contenus. Il peut être mis à jour par velib_arcgis_online.py.
 
 
 
