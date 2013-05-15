@@ -22,7 +22,8 @@ token_reponse = requests.post(agol_url,data=params)
 token = token_reponse.json()['token']
 
 # On récupère toutes les stations à partir du service d'entités ArcGIS Online
-# en passant le token en paramètre. Notez le referer passé dans le Header de la requête, nécéssaire par rapport à l'encodage du token.
+# en passant le token en paramètre. Notez le referer passé dans le Header de la requête,
+# nécéssaire par rapport à l'encodage du token.
 # La requête 1=1 permet de récupérer toutes les stations
 #
 query_url = 'https://services.arcgis.com/d3voDfTFbHOCRwVR/ArcGIS/rest/services/stations/FeatureServer/0/query'
@@ -45,7 +46,8 @@ for feature in features:
     #
     for etat_station in etat:
         if etat_station['number'] == number:
-            # On a trouvé la station courante, a-t-elle été mise à jour par rapport à son état dans ArcGIS Online ?
+            # On a trouvé la station courante,
+            # a-t-elle été mise à jour par rapport à son état dans ArcGIS Online ?
             #
             if etat_station['last_update'] > feature['attributes']['last_update']:
                 # On met à jour la station (dans les objets Python)
@@ -62,7 +64,8 @@ for feature in features:
                 nb_unchanged_features=nb_unchanged_features+1
             break
 
-# On va poster via HTTP la liste des objets mis à jour sur le Endpoint REST ArcGIS permettant la mise à jour de la couche carto des stations
+# On va poster via HTTP la liste des objets mis à jour sur le Endpoint REST ArcGIS permettant
+# la mise à jour de la couche carto des stations
 # Ces objets sont "dumpés" en Json avant d'être postés en HTTP
 #
 update_url = 'http://services.arcgis.com/d3voDfTFbHOCRwVR/ArcGIS/rest/services/stations/FeatureServer/0/updateFeatures'
