@@ -1,31 +1,30 @@
 # -*- coding: cp1252 -*-
-
-# modules Python : requests pour les requêtes HTTP et json pour l'encodage Json
+# modules Python : requests pour les requï¿½tes HTTP et json pour l'encodage Json
 #
 import requests, json
 
-# On récupère l'état courant des stations vélib sous forme JSON
+# On rï¿½cupï¿½re l'ï¿½tat courant des stations vï¿½lib sous forme JSON
 #
 etat = requests.get('https://api.jcdecaux.com/vls/v1/stations?apiKey=ac0af9e1563a3acb94ea0e704b6602085529f2b8&contract=Paris').json()
 
-# d'abord on récupère un Token sur ArcGIS Online qui permettra de s'authentifier sur la plateforme
+# d'abord on rï¿½cupï¿½re un Token sur ArcGIS Online qui permettra de s'authentifier sur la plateforme
 # Substituer vos propres nom d'utilisateur et mot de passe
 #
 agol_url = 'https://www.arcgis.com/sharing/rest/generateToken'
 agol_user = 'votre_nom_d_utilisateur'
 agol_password = 'votre_mot_de_passe'
 
-# Le referer n'a pas d'importance pour ce type de requête à partir d'un script
+# Le referer n'a pas d'importance pour ce type de requï¿½te ï¿½ partir d'un script
 #
 params = {'username': agol_user,'password': agol_password, 'f': 'pjson', 'client': 'referer','referer':'arcgis.com'}
 token_reponse = requests.post(agol_url,data=params)
 token = token_reponse.json()['token']
 
-# On récupère toutes les stations à partir du service d'entités ArcGIS Online
-# en passant le token en paramètre. Notez le referer passé dans le Header de la requête,
-# nécéssaire par rapport à l'encodage du token.
-# La requête 1=1 permet de récupérer toutes les stations
-# Vous devez changer l'URL d'accès au service d'entité pour pointer vers votre propre service
+# On rï¿½cupï¿½re toutes les stations ï¿½ partir du service d'entitï¿½s ArcGIS Online
+# en passant le token en paramï¿½tre. Notez le referer passï¿½ dans le Header de la requï¿½te,
+# nï¿½cï¿½ssaire par rapport ï¿½ l'encodage du token.
+# La requï¿½te 1=1 permet de rï¿½cupï¿½rer toutes les stations
+# Vous devez changer l'URL d'accï¿½s au service d'entitï¿½ pour pointer vers votre propre service
 #
 query_url = 'https://services.arcgis.com/xxxxxxxxxxx/ArcGIS/rest/services/xxxxxxx/FeatureServer/0/query'
 params = {'where': '1=1','outfields': '*','f': 'json','token': token}
@@ -39,25 +38,25 @@ nb_unchanged_features=0
 
 updatedFeatures = []
 
-# On itère station par station dans le jeux de données ArcGIS
+# On itï¿½re station par station dans le jeux de donnï¿½es ArcGIS
 #
 for feature in features:
     number = feature['attributes']['number']
-    # On lance la recherche de la station courante dans les données issues de l'API Velib
+    # On lance la recherche de la station courante dans les donnï¿½es issues de l'API Velib
     #
     for etat_station in etat:
         if etat_station['number'] == number:
-            # On a trouvé la station courante,
-            # a-t-elle été mise à jour par rapport à son état dans ArcGIS Online ?
+            # On a trouvï¿½ la station courante,
+            # a-t-elle ï¿½tï¿½ mise ï¿½ jour par rapport ï¿½ son ï¿½tat dans ArcGIS Online ?
             #
             if etat_station['last_update'] > feature['attributes']['last_update']:
-                # On met à jour la station (dans les objets Python)
+                # On met ï¿½ jour la station (dans les objets Python)
                 #
                 feature['attributes']['status'] = etat_station['status']
                 feature['attributes']['available_bike_stands'] = etat_station['available_bike_stands']
                 feature['attributes']['available_bikes'] = etat_station['available_bikes']
                 feature['attributes']['last_update'] = etat_station['last_update']
-                # On copie la version mise à jour dans une liste des objets mis à jour
+                # On copie la version mise ï¿½ jour dans une liste des objets mis ï¿½ jour
                 #
                 updatedFeatures.append(feature)
                 nb_updated_features=nb_updated_features+1
@@ -65,13 +64,13 @@ for feature in features:
                 nb_unchanged_features=nb_unchanged_features+1
             break
 
-# On va poster via HTTP la liste des objets mis à jour sur le Endpoint REST ArcGIS permettant
-# la mise à jour de la couche carto des stations
-# Ces objets sont "dumpés" en Json avant d'être postés en HTTP
-# Vous devez changer l'URL d'accès au service d'entité pour pointer vers votre propre service
+# On va poster via HTTP la liste des objets mis ï¿½ jour sur le Endpoint REST ArcGIS permettant
+# la mise ï¿½ jour de la couche carto des stations
+# Ces objets sont "dumpï¿½s" en Json avant d'ï¿½tre postï¿½s en HTTP
+# Vous devez changer l'URL d'accï¿½s au service d'entitï¿½ pour pointer vers votre propre service
 #
 update_url = 'http://services.arcgis.com/xxxxxxxxxxxxxx/ArcGIS/rest/services/xxxxxxx/FeatureServer/0/updateFeatures'
 params = {'features': json.dumps(updatedFeatures),'f': 'json','token': token}
 update_reponse = requests.post(update_url,data=params,headers=headers)
 
-print str(nb_updated_features) + " stations mises à jour et " + str(nb_unchanged_features) + ' stations inchangées'
+print str(nb_updated_features) + " stations mises ï¿½ jour et " + str(nb_unchanged_features) + ' stations inchangï¿½es'
