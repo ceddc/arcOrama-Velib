@@ -18,6 +18,8 @@ La classe d'entités doit déjà contenir 1227 points (à la date de création d
 - available_bikes (type: esriFieldTypeSmallInteger, alias: available_bikes, SQL Type: sqlTypeOther, nullable: true, editable: true)
 - last_update (type: esriFieldTypeDate, alias: last_update, SQL Type: sqlTypeOther, length: 8, nullable: true, editable: true)
 
+Vous pouvez créer ce service d'entités en chargeant le fichier stations_velib.csv en suivant la procédure ci-dessous. 
+
 Dans ce script, doivent être modifiés pour correspondre à votre environnement :
 - Username/Password ArcGIS Online utilisé pour l'exécution
 - URL REST d'accès Query et Update à la classe d'entité des stations
