@@ -23,13 +23,21 @@ Dans ce script, doivent être modifiés pour correspondre à votre environnement
 - URL REST d'accès Query et Update à la classe d'entité des stations
 
 .....................................
-stations.sd
+stations_velib.csv
 .....................................
 
-Fichier de définition de schéma permettant de recréer la couche stations prête à l'emploi sur ArcGIS Online :
-- Ajouter le fichier à votre contenu ArcGIS Online
-- Publier le service d'entité à partir des détails de stations.sd
-- un service d'entités "stations" est créé dans vos contenus. Il peut être mis à jour par velib_arcgis_online.py.
+Ce fichier CSV contient la description des stations et leur positionnement géographique en long/lat et en système de coordonnées Web Mercator (Colonnes X et Y)
+Pour créer un service d'entités ArcGIS Online des stations, il faut :
+- Si vous désirez, ouvrir le futur service au public, en vous réservant possibilité de mettre à jour via le script Python :
+  - Remplacer toutes les occurences de "VotreNom" par votre nom d'utilisateur ArcGIS Online
+- Charger le fichier CSV dans votre contenu ArcGIS Online
+- Publier un service à partir du fichier CSV
+- Si vous désirez, ouvrir le futur service au public, en vous réservant possibilité de mettre à jour via le script Python :
+  - Activer le suivi des mises à jour sur le service
+  - Réserver la mise à jour des données aux utilisateurs qui les ont créées
+  - Ces deux paramètres se configurent en cliquant sur "Modifier" dans les propriétés du service d'entités.
+- C'est l'URL REST de ce nouveau service qui devra être utilisé dans le script Python (cf. ci-dessus).
+
 
 
 
