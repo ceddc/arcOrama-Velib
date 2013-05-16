@@ -40,6 +40,8 @@ Pour créer un service d'entités ArcGIS Online des stations, il faut :
   - Ces deux paramètres se configurent en cliquant sur "Modifier" dans les propriétés du service d'entités.
 - C'est l'URL REST de ce nouveau service qui devra être utilisé dans le script Python (cf. ci-dessus).
 
+- Les données de ce fichiers sont issues du programme OpenData JCDecaux (http://developer.jcdecaux.com) / 2013
+
 
 
 
