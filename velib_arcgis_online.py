@@ -4,8 +4,9 @@
 import requests, json
 
 # On r�cup�re l'�tat courant des stations v�lib sous forme JSON
+# remplacer les "xxx" par votre API Key JC Decaux
 #
-etat = requests.get('https://api.jcdecaux.com/vls/v1/stations?apiKey=ac0af9e1563a3acb94ea0e704b6602085529f2b8&contract=Paris').json()
+etat = requests.get('https://api.jcdecaux.com/vls/v1/stations?apiKey=xxxxxxxx&contract=Paris').json()
 
 # d'abord on r�cup�re un Token sur ArcGIS Online qui permettra de s'authentifier sur la plateforme
 # Substituer vos propres nom d'utilisateur et mot de passe
